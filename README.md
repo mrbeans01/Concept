@@ -129,7 +129,9 @@ Function Length
 . This property equates to the number of arguments that the function is expecting. 
 
 
-#JavaScript magics
+
+
+# JavaScript magics
 
 
 
