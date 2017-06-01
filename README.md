@@ -1,6 +1,6 @@
 # Concept
 Basic Concept
-
+<pre>
 
 # Javascript Objects and functions
 ## FUNCTIONS AS FIRST-CLASS OBJECTS
@@ -148,7 +148,7 @@ if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
 https://developer.mozilla.org/en-US/docs/AJAX/Getting_Started
 
 
-The full list of the readyState values is documented at XMLHTTPRequest.readyState and is as follows:
+The full list of the readyState values is documented at XMLHTTPRequest.readyState and is as follows
 
 0 (uninitialized) or (request not initialized)
 1 (loading) or (server connection established)
@@ -157,31 +157,30 @@ The full list of the readyState values is documented at XMLHTTPRequest.readyStat
 4 (complete) or (request finished and response is ready)
 
 
-
-
-Clousre
+>> Clousre
+<pre>
 var add = (function () {
     var counter = 0;
     return function () {return counter += 1;}
 })();
-
-Cuqyying 
+</pre>
+>> Currying 
+<pre>
 var add = function(a){
 	return function(b){
 	return a+b;
 	}
 }
-
+</pre>
 
 Promises and callback
-
 
 
 REST API 
 Representational state transfer (REST) or RESTful Web services are one way of providing interoperability between computer systems on the Internet
 
 
-rest vs soap web servicesvascr
+rest vs soap web services
 http/s   others
 can use any format     XML  
 
@@ -228,3 +227,4 @@ Familiarity with containers like Docker a plus; Some familiarity with tomcat, je
 nginx a plus; Familiarity with Web/REST applications a plus.
 
 
+</pre>
