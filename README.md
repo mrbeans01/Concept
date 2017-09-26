@@ -343,6 +343,370 @@ accessebility feature
 
 
  Cross domain , cross origin  CORS ??
+ 
+ 
+ 
+ 
+ 
+
+
+What are reflows and repaints and how to avoid them
+
+Its becom­ing increas­ingly com­mon for the topic of reflows and repaints to come up when talk­ing about improv­ing page per­for­mance. Although the two of them are closely related, they dif­fer in terms of the impact each can have on browser performance.
+
+Repaint
+
+A repaint occurs when you change the styling of an ele­ment such that it does not effect its lay­out. For e.g. When you change the back­ground color or out­line etc.
+
+Causes of repaints
+In essence, any­thing that causes the visual appear­ance of a DOM node to change causes a repaint of that par­tic­u­lar dom node and more than likely all of its chil­dren. Some of the causes or repaints are
+
+Scrolling: When you scroll, the browser has to redraw the pix­els at the place that you scrolled. This is one is not as eas­ily avoidable.
+Chang­ing vis­i­bil­ity or col­ors or back­ground colors.
+
+
+
+Reflow
+
+A reflow pri­mar­ily occurs when the lay­out of an ele­ment changes. It causes the browser to recom­pute the dimen­sions and posi­tion­ing of the par­ent and child nodes and some­times even ances­tors and sib­lings. Browser imple­men­ta­tions dif­fer in the way they opti­mize for reflows.
+
+The most impor­tant point to be aware of in this dis­cus­sion is
+
+A reflow is a user-blocking oper­a­tion. It con­sumes rel­a­tively higher CPU time and will result in a degraded user expe­ri­ence on a mobile device if it hap­pens to often.
+
+
+Causes of reflows
+As a rule of thumb — any­thing that affects the cur­rent ‘flow’ of ele­ments in the page will trig­ger a reflow. Some of the causes of reflows are
+
+Resiz­ing the window
+Mov­ing your mobile device(tablet/phone) from land­scape to por­trait mode and vice versa.
+Chang­ing the font size
+Cal­cu­lat­ing off­setWidth and offsetHeight
+Chang­ing the height, width, positions
+Chang­ing inline styles
+Using JavaScript meth­ods involv­ing com­puted styles
+Adding/removing ele­ments from the dom
+
+In most cases, reflows are fol­lowed by a repaint.
+
+
+Ways to min­i­mize reflows and repaints
+
+DOM oper­a­tions involv­ing ani­ma­tions should prefer­able done out of the flow using — posi­tion absolute or fixed.
+Change classes at the low­est lev­els in the DOM tree.
+Avoid using inline style. Aside from that, not only are they a night­mare to main­tain, they also increase amount of markup to be delivered(if you are doing server side render).
+Avoid tables for lay­out. Because the con­tent of any cell in a table can impact the dimen­sions of another cell in the table, it causes mul­ti­ple passes to be ren­dered. There­fore almost any change to a table can cause reflows.
+When­ever pos­si­ble if new nodes are to be added to the DOM, batch together oper­a­tions that manip­u­late them before insert­ing them into the DOM.
+When read­ing com­puted styles like off­setWidth and off­setHeight, don’t inter­leave them with a write to those prop­er­ties. e.g. If you already retrieved a node.offsetHeight, batch all other such read oper­a­tions until you write to the dom again. Thats because con­sec­u­tive reads on com­puted styles will not trig­ger a reflow.
+Debounce the win­dow resize event han­dler, if any.
+
+
+
+
+
+ // find longest unique sub string lentgh
+
+https://gist.github.com/primaryobjects/3bbf42ed7fdd537cd88705de2edd5120
+
+
+function maxSubstring(s){
+  var max =0;
+  var lastIndex =0;
+  var arr = [];
+  var newStr='';
+  for (var i=0; i<s.length ;i++)
+  {
+
+   if(arr[s[i]])
+   {
+        if (newStr.length > max) {  
+            max = newStr.length;
+        }
+
+        var start = newStr.indexOf(s[i]);
+        newStr = newStr.substring(start + 1); 
+   }
+ 	  newStr += s[i];
+    arr[s[i]] = i + 1;
+
+  }
+
+  return max;
+ 
+}
+
+
+
+# What happens when you type an URL in the browser and press enter ans then?
+
+The browser checks the cache for a DNS record to find the corresponding IP address of maps.google.com.
+ In order to find the DNS record, the browser checks four caches.
+  1.First, it checks the browser cache. The browser maintains a repository of DNS records for a fixed duration for websites you have previously visited. So, it is the first place to run a DNS query.
+  2.Second, the browser checks the OS cache. If it is not found in the browser cache, the browser would make a system call (i.e. gethostname on Windows) to your underlying computer OS to fetch the record since the OS also maintains a cache of DNS records.
+  3.Third, it checks the router cache. If it’s not found on your computer, the browser would communicate with the router that maintains its’ own cache of DNS records.
+  4.Fourth, it checks the ISP cache. If all steps fail, the browser would move on to the ISP. Your ISP maintains its’ own DNS server which includes a cache of DNS records which the browser would check with the last hope of finding your requested URL.
+
+If the requested URL is not in the cache, ISP’s DNS server initiates a DNS query to find the IP address of the server that hosts maps.google.com. if found somewhere
+
+Browser initiates a TCP connection with the server.
+
+The browser sends an HTTP request to the web server.
+
+The browser displays the HTML content (for HTML responses which is the most common).
+
+The server handles the request and sends back a response.
+
+
+
+ iterator in vanila javascript
+
+object 
+for in   (based on index)
+for of  (based on value)
+
+Array foreach
+
+
+
+
+var ints = [ 1, 2, 3, 4, 5 ];
+
+function indexOf(arr, test) {
+  
+  return BST(arr , 0 , arr.length, test)
+}
+
+
+function BST(arr , min , max , test){
+  console.log('min , max',min,max);
+  var mid = Math.floor((min + max)/2);
+  if(min<max){
+      if(test == arr[mid] ){
+        return mid;
+      }else if(test > arr[mid]){
+
+      return BST(arr ,mid,max ,test);
+    }else if(test  < arr[mid]){
+      return BST(arr ,min,mid ,test);
+    }
+  }else{
+    
+    return -1;
+    
+  }  
+
+}
+
+
+
+
+///////////
+
+
+align on div to center of another Div 
+
+
+Solutions 1 :-
+
+div.outer {
+    display: table-cell;
+    width: 500px;
+    height: 500px;
+    background: gray;
+    vertical-align: middle;
+    text-align: center;
+}
+
+div.inner {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background: red;
+}
+
+solution 2 :-
+.cn {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.inner {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 200px;
+  height: 200px;
+}
+
+
+Solution 3: -
+div.outer {
+   display: flex;
+  justify-content: center;
+    width: 500px;
+    height: 500px;
+    background: gray;
+  
+}
+
+div.inner {
+   background: gold;
+  align-self: center;
+  padding: 2rem;
+}
+
+The CSS transform property lets you modify the coordinate space of the CSS visual formatting model. Using it, elements can be translated, rotated, scaled, and skewed.
+(common wald shift coordinates)
+
+
+
+
+Difference between Inline vs inline-block vs block
+
+Inline elements:
+
+respect left & right margins and padding, but not top & bottom
+cannot have a width and height set
+allow other elements to sit to their left and right.
+see very important side notes on this here.
+
+Block elements:
+
+respect all of those
+force a line break after the block element
+
+Inline-block elements:
+
+allow other elements to sit to their left and right
+respect top & bottom margins and padding
+respect height and width
+
+
+
+
+An inline element has no line break before or after it, and it tolerates HTML elements next to it.
+A block element has some whitespace above and below it and does not tolerate any HTML elements next to it.
+An inline-block element is placed as an inline element (on the same line as adjacent content), but it behaves as a block element.
+
+
+
+Flex in css   
+
+example
+div{
+   width: 220px;
+    height: 300px;
+    border: 1px solid black;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-wrap:wrap;
+}
+
+
+vertical-align  :-
+
+The vertical-align CSS property specifies the vertical alignment of an inline or table-cell box.
+
+Default font size:-
+The default text size in browsers is 16px. So, the default size of 1em is 16px.
+
+
+
+str.substring(indexStart, [indexEnd])
+
+SubString 
+If indexStart is greater than indexEnd, then the effect of substring() is as if the two arguments were swapped; for example, str.substring(1, 0) == str.substring(0, 1).
+
+
+
+Event Deligation 
+
+// Get the parent DIV, add click listener...
+  document.getElementById("myDiv").addEventListener("click",function(e) {
+// e.target was the clicked element
+if(e.target && e.target.nodeName == "A") {
+    // Get the CSS classes
+    var classes = e.target.className.split(" ");
+    // Search for the CSS class!
+    if(classes) {
+        // For every CSS class the element has...
+        for(var x = 0; x < classes.length; x++) {
+            // If it has the CSS class we want...
+            if(classes[x] == "classA") {
+                // Bingo!
+                console.log("Anchor element clicked!");
+                // Now do something here....
+            }
+        }
+    }
+
+  }
+});
+
+
+
+
+Bind 
+
+
+this.x = 9;    // this refers to global "window" object here in the browser
+var module = {
+  x: 81,
+  getX: function() { return this.x; }
+};
+
+module.getX(); // 81
+
+var retrieveX = module.getX;
+ retrieveX();   
+ // returns 9 - The function gets invoked at the global scope
+
+// Create a new function with 'this' bound to module
+// New programmers might confuse the
+// global var x with module's property x
+
+var boundGetX = retrieveX.bind(module);
+
+boundGetX(); // 81
+
+
+
+Borrowing Functions with Apply and Call (A Must Know)
+
+
+
+// Make a quick copy and save the results in a real array:​
+                // First parameter sets the "this" value​
+                var newArray = Array.prototype.slice.call (anArrayLikeObj, 0);
+
+
+                 console.log (Array.prototype.pop.call (anArrayLikeObj));
+
+While the syntax of this function is almost identical to that of apply(), the fundamental difference is that call() accepts an argument list, while apply() accepts a single array of arguments.
+
+
+
+Block zooming for web page 
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+
+create 3 colum layout here 1st and last coloum width is fixed and middle on is flexible .
+solution :- used table for container  and table-cell for colom .
+
+
+
+
+does sum of w number in a array to match to a given number
+
+findSum([6,1,4,5,7],3) false
+findSum([6,1,2,5,7],3) true
+
+solve it by doing a difference and putting it in obect
+
+
 
 
 
@@ -1457,6 +1821,266 @@ LRUCache.prototype = {
   }
 
   }
+
+
+
+
+/* Angular JS */
+
+How to make state or route case insensitive 
+ $routeProvider.
+        when('/', { controller: 'TmpCtrl', templateUrl: '/app/home.html' }).
+        when('/foo', { controller: 'TmpCtrl', templateUrl: '/app/foo.html', caseInsensitiveMatch: true }).  
+        otherwise({ redirectTo: '/' });
+
+
+  app.config(function ($urlRouterProvider) {
+  // Here's an example of how you might allow case insensitive urls
+   $urlRouterProvider.rule(function ($injector, $location) {
+   //what this function returns will be set as the $location.url
+    var path = $location.path(), normalized = path.toLowerCase();
+    if (path != normalized) {
+        //instead of returning a new url string, I'll just change the $location.path directly so I don't have to worry about constructing a new url string and so a new state change is not triggered
+        $location.replace().path(normalized);
+    }
+    // because we've returned nothing, no state change occurs
+});}
+
+
+
+default router 
+ $urlRouterProvider.otherwise('/default')
+how to remove # from router 
+$locationProvider.html5Mode(true);
+
+
+
+
+
+AngularJS Life Cycle
+The three phases of the life cycle of an AngularJS application happen each time a web page is loaded in the browser. The following sections describe these phases of an AngularJS application.
+
+The Bootstrap Phase
+The first phase of the AngularJS life cycle is the bootstrap phase, which occurs when the AngularJS JavaScript library is downloaded to the browser. AngularJS initializes its own necessary components and then initializes your module, which the ng-app directive points to. The module is loaded, and any dependencies are injected into your module and made available to code within the module.
+
+The Compilation Phase
+The second phase of the AngularJS life cycle is the HTML compilation stage. Initially when a web page is loaded, a static form of the DOM is loaded in the browser. During the compilation phase, the static DOM is replaced with a dynamic DOM that represents the AngularJS view.
+
+This phase involves two parts: traversing the static DOM and collecting all the directives and then linking the directives to the appropriate JavaScript functionality in the AngularJS built-in library or custom directive code. The directives are combined with a scope to produce the dynamic or live view.
+
+The Runtime Data Binding Phase
+The final phase of the AngularJS application is the runtime phase, which exists until the user reloads or navigates away from a web page. At that point, any changes in the scope are reflected in the view, and any changes in the view are directly updated in the scope, making the scope the single source of data for the view.
+
+AngularJS behaves differently from traditional methods of binding data. Traditional methods combine a template with data received from the engine and then manipulate the DOM each time the data changes. AngularJS compiles the DOM only once and then links the compiled template as necessary, making it much more efficient than traditional methods.
+
+
+
+#################################
+Strict mode 
+
+'use strict';
+
+ECMAScript 5's strict mode is a way to opt in to a restricted variant of JavaScript
+
+Strict mode makes several changes to normal JavaScript semantics. 
+First, strict mode eliminates some JavaScript silent errors by changing them to throw errors.
+Second, strict mode fixes mistakes that make it difficult for JavaScript engines to perform optimizations: strict mode code can sometimes be made to run faster than identical code that's not strict mode. 
+
+Third, strict mode prohibits some syntax likely to be defined in future versions of ECMAScript.
+
+
+example 1:-
+
+'use strict';
+var v = "Hi! I'm a strict mode script!";
+
+example 2:-
+function strict() {
+  // Function-level strict mode syntax
+  'use strict';
+  function nested() { return 'And so am I!'; }
+  return "Hi!  I'm a strict mode function!  " + nested();
+}
+
+
+
+Changes in strict mode
+
+Strict mode changes both syntax and runtime behavior.
+Changes generally fall into these categories: changes converting mistakes into errors (as syntax errors or at runtime), 
+ changes simplifying how the particular variable for a given use of a name is computed, changes simplifying eval and arguments, 
+ changes making it easier to write "secure" JavaScript, and changes anticipating future ECMAScript evolution.
+
+
+* Converting mistakes into errors
+
+
+First, strict mode makes it impossible to accidentally create global variables.
+
+'use strict';
+                       // Assuming a global variable mistypedVariable exists
+mistypeVariable = 17; // this line throws a ReferenceError due to the 
+                       // misspelling of variable
+
+
+
+
+Second, strict mode makes assignments which would otherwise silently fail to throw an exception.
+
+'use strict';
+
+
+// Assignment to a non-writable global
+var undefined = 5; // throws a TypeError
+var Infinity = 5; // throws a TypeError
+
+// Assignment to a non-writable property
+var obj1 = {};
+Object.defineProperty(obj1, 'x', { value: 42, writable: false });
+obj1.x = 9; // throws a TypeError
+
+// Assignment to a getter-only property
+var obj2 = { get x() { return 17; } };
+obj2.x = 5; // throws a TypeError
+
+// Assignment to a new property on a non-extensible object
+var fixed = {};
+Object.preventExtensions(fixed);
+fixed.newProp = 'ohai'; // throws a TypeError
+
+
+Third, strict mode makes attempts to delete undeletable properties throw 
+
+'use strict';
+delete Object.prototype; // throws a TypeError
+
+
+Fourth, strict mode prior to Gecko 34 requires that all properties named in an object literal be unique.
+'use strict';
+var o = { p: 1, p: 2 }; // !!! syntax error
+
+
+Fifth, strict mode requires that function parameter names be unique. In normal code the last duplicated argument hides previous identically-named arguments.
+
+function sum(a, a, c) { // !!! syntax error
+  'use strict';
+  return a + b + c; // wrong if this code ran
+}
+
+Sixth, strict mode in ECMAScript 5 forbids octal syntax.
+'use strict';
+var sum = 015 + // !!! syntax error
+          197 +
+          142;
+
+
+* Simplifying variable uses
+
+First, strict mode prohibits with. 
+
+Second, eval of strict mode code does not introduce new variables into the surrounding scope. In normal code eval("var x;") introduces a variable x into the surrounding function or the global scope. This means that, in general, in a function containing a call to eval every name not referring to an argument or local variable must be mapped to a particular definition at runtime 
+
+* Making eval and arguments simpler
+
+All these attempts to do so are syntax errors:
+
+'use strict';
+eval = 17;
+arguments++;
+++eval;
+
+
+arguments.callee is no longer supported. 
+
+"Securing" JavaScript
+
+
+########################
+
+
+
+https://developers.google.com/web/fundamentals/performance/critical-rendering-path/page-speed-rules-and-recommendations
+
+
+
+//////// 
+ Sum all number inside a object 
+
+ var obj ={ a:10 ,b:20 , c :[ 10,20,30, { a:10}]}
+
+function SumObj(obj){
+ var sum=0;
+  for (var val of obj){
+
+     if(typeof val =='number'){
+       sum +=val
+     }else{
+      sum +=SumObj(val);
+     }
+  }
+  return sum;
+ }
+
+
+ Balance paranthesis 
+
+ currying implementation to write a function  intiCount ??
+   let incr = intiCount(5);
+   incr() // 6
+   incr() // 7
+
+
+
+
+// Implementation of context swtiching 
+var a = {
+  name:'Vivek',
+  prop: {
+    name:'Aravind',
+    getName: function(test) {
+      console.log(this.name+' '+test);
+    }
+  }
+}
+a.prop.getName();
+a.prop.getName.apply(a,['venkatachari']);
+a.prop.getName.call(a,'venkatachari');
+b = a.prop.getName.bind(a);
+b('Venkatachari');
+
+
+
+// reverse array or string in optimized way
+
+
+custom directive
+
+
+E for Element name
+A for Attribute
+C for Class
+M for Comment
+By default the value is EA, meaning that both Element names and attribute names can invoke the directive.
+
+
+<div my-isolated-scope-with-model-and-function 
+     datasource="customer" 
+     action="changeData()">
+</div>
+
+
+angular.module('directivesModule').directive('myIsolatedScopeWithModelAndFunction', function () {
+    return {
+    restrict : "A",
+        scope: {
+            datasource: '=',
+            action: '&'
+        },
+        template: '<ul><li ng-repeat="prop in datasource">{{ prop }}</li></ul> ' +
+                  '<button ng-click="action()">Change Data</button>'
+    };
+});
+
 
 
 
